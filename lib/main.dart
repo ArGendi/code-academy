@@ -18,44 +18,162 @@ class _MyAppState extends State<MyApp> {
   bool isDarkMode = false;
   int x = 0;
   File? imageFile;
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> names = ["Ahmed", "mohamed", "omar", "Abdelrahman", "Abdallah", "Mo Salah"];
+
+  void getImageFromCamera() async{
+    ImagePicker picker = ImagePicker();
+    XFile? xfile = await picker.pickImage(source: ImageSource.camera);
+    if(xfile != null){
+      setState(() {
+        imageFile = File(xfile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Scaffold(
+      key: scaffoldKey,
       backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
-      appBar: AppBar(
-        foregroundColor: Colors.red,
-        backgroundColor: isDarkMode ? Colors.black : Colors.green,
-        title: Text('Our app'),
-        leading: Icon(Icons.menu),
-        actions: [
-          IconButton(
-            onPressed: (){
-              setState(() {
-                isDarkMode = !isDarkMode;
-              });
-            }, 
-            icon: Icon(Icons.dark_mode),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        child: Icon(Icons.add),
+        onPressed: (){},
       ),
-      body: Center(
+      //floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+      drawer: Drawer(
+        child: SafeArea(
+          child: Column(
+            children: [
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.black),
+                accountName: Text("Abdelrahman"), 
+                accountEmail: Text("abdelrahman@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage('https://hips.hearstapps.com/hmg-prod/images/dw-burnett-pcoty22-8260-1671143390.jpg?crop=0.668xw:1.00xh;0.184xw,0&resize=640:*'),
+                ),
+              ),
+              ListTile(
+                onTap: (){},
+                title: Text("Home"),
+                leading: Icon(Icons.home),
+                //subtitle: Text("this is home page"),
+                //trailing: Icon(Icons.search),
+              ),
+              ListTile(
+                onTap: (){},
+                title: Text("Men section"),
+                leading: Icon(Icons.home),
+                //subtitle: Text("this is home page"),
+                //trailing: Icon(Icons.search),
+              ),
+              ListTile(
+                onTap: (){},
+                title: Text("Admin section"),
+                leading: Icon(Icons.home),
+                //subtitle: Text("this is home page"),
+                //trailing: Icon(Icons.search),
+              ),
+              Spacer(),
+              ListTile(
+                onTap: (){},
+                title: const Text("Log out", style: TextStyle(color: Colors.red),),
+                leading: Icon(Icons.exit_to_app, color: Colors.red,),
+                //subtitle: Text("this is home page"),
+                //trailing: Icon(Icons.search),
+              ),
+            ],
+          ),
+        ),
+      ),
+      // appBar: AppBar(
+      //   foregroundColor: Colors.white,
+      //   backgroundColor: isDarkMode ? Colors.black : Colors.green,
+      //   title: Text('Our app'),
+      //   // leading: Icon(Icons.menu),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: (){
+      //         setState(() {
+      //           isDarkMode = !isDarkMode;
+      //         });
+      //       }, 
+      //       icon: Icon(Icons.dark_mode),
+      //     ),
+      //   ],
+      // ),
+      // body: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       CircleAvatar(
+      //         radius: 60,
+      //         backgroundImage: imageFile != null ? FileImage(imageFile!) : null,
+      //         child: imageFile == null ? IconButton(
+      //         icon: Icon(Icons.camera_alt),
+      //           onPressed: (){
+      //             getImageFromCamera();
+      //           },
+      //         ) : null,
+      //       ),
+      //       IconButton(
+      //         icon: Icon(Icons.menu),
+      //         onPressed: (){
+      //           scaffoldKey.currentState!.openDrawer();
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
+      // body: SafeArea(
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(15.0),
+      //     child: ListView.separated(
+      //       itemCount: names.length,
+      //       itemBuilder: (context, i){
+      //         return Container(
+      //           height: 150,
+      //           color: Colors.green,
+      //           child: Center(child: Text(names[i])),
+      //         );
+      //       }, 
+      //       separatorBuilder: (BuildContext context, int index) { 
+      //         return SizedBox(height: 10,);
+      //        },
+      //     ),
+      //   ),
+      // ),
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(imageFile != null)
-              Image.file(imageFile!),
-            IconButton(
-              icon: Icon(Icons.camera_alt),
-              onPressed: () async{
-                ImagePicker picker = ImagePicker();
-                XFile? xfile = await picker.pickImage(source: ImageSource.camera);
-                if(xfile != null){
-                  imageFile = File(xfile.path);
-                }
-              },
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.green,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.red,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.blue,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                width: screenSize.width,
+                child: ElevatedButton(
+                  onPressed: (){}, 
+                  child: Text("press me"),
+                ),
+              ),
             ),
           ],
         ),
